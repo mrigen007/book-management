@@ -2,6 +2,7 @@
   "name": "task-manager-node",
   "version": "1.0.0",
   "main": "app.js",
+  "proxy": "http://localhost:3000",
   "scripts": {
     "start": "nodemon app",
     "test": "echo \"Error: no test specified\" && exit 1"
