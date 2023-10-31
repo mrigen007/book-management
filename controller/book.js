@@ -18,12 +18,21 @@ const getSingleBook = async (req, res) => {
     }
     res.status(200).json({ book });
   } catch (error) {
-    res.status(500).json({ msg: error });
+    if (error.name) {
+      res.status(404).json({ msg: `No book exist with this Id` });
+    } else {
+      res.status(500).json({ msg: error });
+    }
   }
 };
 
 const createBook = async (req, res) => {
   try {
+    const { title } = req.body
+    const bookExist = await Book.findOne({ title: title });
+    if (bookExist) {
+      res.status(403).json({ msg: `Book already exist with Title: ${title}` });
+    }
     const book = await Book.create(req.body);
     res.status(200).json({ book });
   } catch (error) {
@@ -40,7 +49,11 @@ const updateBook = async (req, res) => {
     }
     res.status(200).json({ book, msg: `Updated successfully` });
   } catch (error) {
-    res.status(500).send({ msg: error });
+    if (error.name) {
+      res.status(404).json({ msg: `No book exist with this Id` });
+    } else {
+      res.status(500).json({ msg: error });
+    }
   }
 };
 
@@ -53,7 +66,11 @@ const deleteBook = async (req, res) => {
     }
     res.status(200).json({ book, msg: `Deleted successfully`, delete: "true" });
   } catch (error) {
-    res.status(500).json({ msg: error });
+    if (error.name) {
+      res.status(404).json({ msg: `No book exist with this Id` });
+    } else {
+      res.status(500).json({ msg: error });
+    }
   }
 };
 
