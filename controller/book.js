@@ -15,8 +15,9 @@ const getSingleBook = async (req, res) => {
     const book = await Book.findOne({ _id: bookId });
     if (!book) {
       return res.status(404).json({ msg: `No book with Id: ${bookId}` });
+    } else {
+      res.status(200).json({ book });
     }
-    res.status(200).json({ book });
   } catch (error) {
     if (error.name === "CastError") {
       res.status(404).json({ msg: `No book exist with this Id` });
@@ -32,9 +33,10 @@ const createBook = async (req, res) => {
     const bookExist = await Book.findOne({ title: title });
     if (bookExist) {
       res.status(403).json({ msg: `Book already exist with Title: ${title}` });
+    } else {
+      const book = await Book.create(req.body);
+      res.status(200).json({ book });
     }
-    const book = await Book.create(req.body);
-    res.status(200).json({ book });
   } catch (error) {
     res.status(500).json({ msg: error });
   }
@@ -46,8 +48,9 @@ const updateBook = async (req, res) => {
     const book = await Book.findOneAndUpdate({ _id: bookId }, req.body);
     if (!book) {
       return res.status(404).json({ msg: `No book with Id: ${bookId}` });
+    } else {
+      res.status(200).json({ book, msg: `Updated successfully` });
     }
-    res.status(200).json({ book, msg: `Updated successfully` });
   } catch (error) {
     if (error.name === "CastError") {
       res.status(404).json({ msg: `No book exist with this Id` });
@@ -63,8 +66,9 @@ const deleteBook = async (req, res) => {
     const book = await Book.findOneAndDelete({ _id: bookId });
     if (!book) {
       return res.status(404).json({ msg: `No book with Id: ${bookId}` });
+    } else {
+      res.status(200).json({ book, msg: `Deleted successfully`, delete: "true" });
     }
-    res.status(200).json({ book, msg: `Deleted successfully`, delete: "true" });
   } catch (error) {
     if (error.name === "CastError") {
       res.status(404).json({ msg: `No book exist with this Id` });

@@ -6,7 +6,7 @@
 # Add Books
 ## URL: http://localhost:3000/api/book (POST)
 
-Return all books in books collection.
+Add books in books collection.
 
 # Get Single Book
 ## URL: http://localhost:3000/api/book/:id (GET)
