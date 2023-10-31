@@ -18,7 +18,7 @@ const getSingleBook = async (req, res) => {
     }
     res.status(200).json({ book });
   } catch (error) {
-    if (error.name) {
+    if (error.name === "CastError") {
       res.status(404).json({ msg: `No book exist with this Id` });
     } else {
       res.status(500).json({ msg: error });
@@ -49,7 +49,7 @@ const updateBook = async (req, res) => {
     }
     res.status(200).json({ book, msg: `Updated successfully` });
   } catch (error) {
-    if (error.name) {
+    if (error.name === "CastError") {
       res.status(404).json({ msg: `No book exist with this Id` });
     } else {
       res.status(500).json({ msg: error });
@@ -66,7 +66,7 @@ const deleteBook = async (req, res) => {
     }
     res.status(200).json({ book, msg: `Deleted successfully`, delete: "true" });
   } catch (error) {
-    if (error.name) {
+    if (error.name === "CastError") {
       res.status(404).json({ msg: `No book exist with this Id` });
     } else {
       res.status(500).json({ msg: error });
